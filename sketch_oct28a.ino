@@ -25,7 +25,6 @@ long standardSpeed = 127;
 
 long barrierCm = 90;
 
-unsigned long timeSinceDance = millis();
 
 void setup() {
 
@@ -39,7 +38,6 @@ void setup() {
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
 
-  // why?
   digitalWrite(trigPin, LOW);
 
 
@@ -56,8 +54,7 @@ void loop() {
   delayMicroseconds(10); 
   digitalWrite(trigPin, LOW); 
   lecture_echo = pulseIn(echoPin, HIGH); 
-  cm = lecture_echo / 58; 
-
+ 
   if (cm < barrierCm) {
    setStopPixels();
    // stop
@@ -108,36 +105,6 @@ void setStopPixels() {
   }
   npStrip.show();
 }
-
-
-//void rainbow(uint8_t wait) {
-//  uint16_t i, j;
-//
-//  for(j=0; j<256; j++) {
-//    for(i=0; i<NUM_PIXELS; i++) {
-//      npStrip.setPixelColor(i, Wheel((i*1+j) & 255));
-//    }
-//    npStrip.show();
-//    delay(wait);
-//  }
-//}
-//
-//
-//// Input a value 0 to 255 to get a color value.
-//// The colours are a transition r - g - b - back to r.
-//uint32_t Wheel(byte WheelPos) {
-//  if(WheelPos < 85) {
-//    return npStrip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
-//  } 
-//  else if(WheelPos < 170) {
-//    WheelPos -= 85;
-//    return npStrip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
-//  } 
-//  else {
-//    WheelPos -= 170;
-//    return npStrip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
-//  }
-//}
 
 void goForward(long vel) {
   analogWrite(motorEnablePinA, vel);
