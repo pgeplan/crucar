@@ -1,8 +1,3 @@
-#include <Adafruit_NeoPixel.h>
-
-#define PIXEL_PIN 9
-#define NUM_PIXELS 3
-Adafruit_NeoPixel npStrip(NUM_PIXELS, PIXEL_PIN);
 
 
 int motorEnablePinA = 11;
@@ -15,15 +10,6 @@ int motorPinB2 = 4;
 
 int echoPin = 5;
 int trigPin = 6;
-
-bool shouldTurnLeft = false;
-bool objInWay = false;
-
-long lecture_echo; 
-long cm;
-long standardSpeed = 127;
-
-long barrierCm = 90;
 
 
 void setup() {
@@ -41,69 +27,15 @@ void setup() {
   digitalWrite(trigPin, LOW);
 
 
-  /// neopixel
-  npStrip.begin(); 
+
 
   Serial.begin(9600);
 }
 
 void loop() {  
-  // get distance 
-  
-  digitalWrite(trigPin, HIGH); 
-  delayMicroseconds(10); 
-  digitalWrite(trigPin, LOW); 
-  lecture_echo = pulseIn(echoPin, HIGH); 
- 
-  if (cm < barrierCm) {
-   setStopPixels();
-   // stop
-   objInWay = true;
-   stopMoving();
-   delay(100);
-   // back up 
-   goBackwards(standardSpeed);
-   delay(500);
-   if (shouldTurnLeft) {
-     turnLeft();
-   }
-   else {
-    turnRight();
-   }
-   delay(500);
-  }
-  
-  else {
-    setForwardPixels();
-    objInWay = false;
-    shouldTurnLeft = !shouldTurnLeft;
-    goForward(standardSpeed);
-    delay(1000);
-  }
-}
+  // add your code here
+    
 
-
-void setForwardPixels() {
-  //npStrip.clear();
-  //npStrip.show();
-  for (int i=0; i<NUM_PIXELS; i++) {
-    npStrip.setPixelColor(i, random(0, 255), random(0, 255), random(0, 255));
-    delay(100);
-    npStrip.show();
-  }
-  for (int i=NUM_PIXELS-1; i>=0; i--) {
-    npStrip.setPixelColor(i, random(0, 255), random(0, 255), random(0, 255));
-    delay(100);
-    npStrip.show();
-  }
-}
-
-void setStopPixels() {
-  npStrip.clear();
-  for (int i=0; i<NUM_PIXELS; i++) {
-    npStrip.setPixelColor(i, 255, 0, 0);
-  }
-  npStrip.show();
 }
 
 void goForward(long vel) {
