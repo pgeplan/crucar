@@ -1,78 +1,78 @@
 
+int yellowMotorSpeedPin = 2;
+int whiteMotorSpeedPin = 3;
 
-int motorEnablePinA = 11;
-int motorEnablePinB = 3;
+int yellowMotorInput1 = 52;
+int yellowMotorInput2 = 51;
+int whiteMotorInput1 = 22;
+int whiteMotorInput2 = 23;
 
-int motorPinA1 = 10;
-int motorPinA2 = 7;
-int motorPinB1 = 12;
-int motorPinB2 = 4;
-
-int echoPin = 5;
-int trigPin = 6;
+int irSensorPin1 = 4;
 
 
 void setup() {
-
-  // motors
-  pinMode(motorEnablePinA, OUTPUT);
-  pinMode(motorEnablePinB, OUTPUT);
-  pinMode(motorPinA1, OUTPUT);
-  pinMode(motorPinA2, OUTPUT);
-
-  // sensors
-  pinMode(echoPin, INPUT);
-  pinMode(trigPin, OUTPUT);
-
-  digitalWrite(trigPin, LOW);
-
-
-
-
   Serial.begin(9600);
+  
+  // motors
+  pinMode(yellowMotorSpeedPin, OUTPUT);
+  pinMode(whiteMotorSpeedPin, OUTPUT);
+  pinMode(yellowMotorInput1, OUTPUT);
+  pinMode(yellowMotorInput2, OUTPUT);
+  pinMode(whiteMotorInput1, OUTPUT);
+  pinMode(whiteMotorInput2, OUTPUT);
+  
+  // sensors
+  pinMode(irSensorPin1, INPUT);
+  
 }
 
 void loop() {  
   // add your code here
-    
+  int irSensor1 = digitalRead(irSensorPin1);
+  if (irSensor1 == 0) {
+    goForward(127);
+  }
+  else {
+    stopMoving();
+  }
 
 }
 
-void goForward(long vel) {
-  analogWrite(motorEnablePinA, vel);
-  analogWrite(motorEnablePinB, vel);
-  digitalWrite(motorPinA1, HIGH);
-  digitalWrite(motorPinA2, LOW);
-  digitalWrite(motorPinB1, HIGH);
-  digitalWrite(motorPinB2, LOW);
+void goForward(long velocity) {
+  analogWrite(yellowMotorSpeedPin, velocity);
+  analogWrite(whiteMotorSpeedPin, velocity);
+  digitalWrite(yellowMotorInput1, HIGH);
+  digitalWrite(yellowMotorInput2, LOW);
+  digitalWrite(whiteMotorInput1, HIGH);
+  digitalWrite(whiteMotorInput2, LOW);
 }
 
 void turnLeft() {
-  digitalWrite(motorPinA1, HIGH);
-  digitalWrite(motorPinA2, LOW);
-  digitalWrite(motorPinB1, LOW);
-  digitalWrite(motorPinB2, LOW);
+  digitalWrite(yellowMotorInput1, HIGH);
+  digitalWrite(yellowMotorInput2, LOW);
+  digitalWrite(whiteMotorInput1, LOW);
+  digitalWrite(whiteMotorInput2, LOW);
 }
 
 void turnRight() {
-  digitalWrite(motorPinA1, LOW);
-  digitalWrite(motorPinA2, LOW);
-  digitalWrite(motorPinB1, HIGH);
-  digitalWrite(motorPinB2, LOW);
+  digitalWrite(yellowMotorInput1, LOW);
+  digitalWrite(yellowMotorInput2, LOW);
+  digitalWrite(whiteMotorInput1, HIGH);
+  digitalWrite(whiteMotorInput2, LOW);
 }
 
 void stopMoving() {
-  digitalWrite(motorPinA1, LOW);
-  digitalWrite(motorPinA2, LOW);
-  digitalWrite(motorPinB1, LOW);
-  digitalWrite(motorPinB2, LOW);
+  digitalWrite(yellowMotorInput1, LOW);
+  digitalWrite(yellowMotorInput2, LOW);
+  digitalWrite(whiteMotorInput1, LOW);
+  digitalWrite(whiteMotorInput2, LOW);
 }
 
-void goBackwards(long vel) {
-  analogWrite(motorEnablePinA, vel);
-  analogWrite(motorEnablePinB, vel);
-  digitalWrite(motorPinA1, LOW);
-  digitalWrite(motorPinA2, HIGH);
-  digitalWrite(motorPinB1, LOW);
-  digitalWrite(motorPinB2, HIGH);
+void goBackwards(long velocity) {
+  analogWrite(yellowMotorSpeedPin, velocity);
+  analogWrite(whiteMotorSpeedPin, velocity);
+  digitalWrite(yellowMotorInput1, LOW);
+  digitalWrite(yellowMotorInput2, HIGH);
+  digitalWrite(whiteMotorInput1, LOW);
+  digitalWrite(whiteMotorInput2, HIGH);
 }
